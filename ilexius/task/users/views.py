@@ -3,7 +3,6 @@ from .models import Employee
 from django.contrib.auth.models import User, auth
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
-# Create your views here.
 
 def home(request):
     users = User.objects.all()
@@ -19,11 +18,9 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             return redirect('/home')
-
         else:
             messages.info(request, 'Invalid credentials')
             return redirect('/')
-
     else:
         return render(request, 'login.html')
 
@@ -43,10 +40,8 @@ def login_as(request):
             else:
                 auth.login(request, user)
                 return render(request, 'index.html', {'users': users})
-
         else:
             return render(request, 'index.html', {'alert_flag': True, 'users': users})
-
     else:
         users = User.objects.all()
         return render(request, 'index.html', {'users': users})

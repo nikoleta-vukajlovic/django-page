@@ -9,14 +9,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="container">
+    {% block content%}
 
-        {% if admin %}
-        <h2>You ARE ADMIN, you can login as {{ username }}</h3>
-        <h3>But we can not decode hashed password, sorry</h3>
-        {% else %}
-        <h2>You ARE NOT ADMIN, you can't login as {{ username }}</h2>
-        {%endif%}
-    </div>
+    {% endblock%}
 </body>
 </html> 
