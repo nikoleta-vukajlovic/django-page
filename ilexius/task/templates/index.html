@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Ilexius</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    {% if user.is_authenticated%}
+    <h1>Logged user: {{user.first_name}}</h1>
+    <div class="container">
+      <form action="logout" method="POST">
+        {% csrf_token %}
+        <div>
+          <button type="submit" class="btn btn-primary mb-2">Logout</button>
+        </div>
+      </form>
+    </div>
+    {% endif %}
+    <h2>All users:</h2>
+
+    {% for u in users %}
+        <div class="container">
+        <form action="login_as" method="POST">
+            {% csrf_token %}
+            <div class="form-group row">
+                <label for="fisrt_name" class="col-sm-2 col-form-label">First name: </label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control-plaintext" name="first_name" value="{{ u.first_name }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="last_name" class="col-sm-2 col-form-label">Last name: </label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control-plaintext" name="last_name" value="{{ u.last_name }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-sm-2 col-form-label">Email: </label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control-plaintext" name="email" value="{{ u.email }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="is_active" class="col-sm-2 col-form-label">Is active: </label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control-plaintext" name="is_active" value="{{ u.is_active }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="is_superuser" class="col-sm-2 col-form-label">Is superuser: </label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control-plaintext" name="is_superuser" value="{{ u.is_superuser }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="username" class="col-sm-2 col-form-label">Username: </label>
+                <div class="col-sm-10">
+                  <input type="username" class="form-control-plaintext" name="username" value="{{ u.username }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="employee_id" class="col-sm-2 col-form-label">Employee id: </label>
+                <div class="col-sm-10">
+                    {% if u.is_active %}
+                        <input type="text" class="form-control-plaintext" name="employee_id" value="{{ u.employee.employee_id }}" readonly>
+                    {% else %}
+                        <input type="text" name="employee_id" class="form-control" value="{{ u.employee.employee_id }}">
+                    {% endif%}
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <label for="login_count" class="col-sm-2 col-form-label">Login count: </label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control-plaintext" name="login_count" value="{{ u.employee.login_count }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                  <input type="hidden" class="form-control-plaintext" name="password" value="{{ u.password }}">
+                </div>
+            </div>  
+            <div>
+              <button type="submit" class="btn btn-primary mb-2">Login As</button>
+            </div>
+        </form> 
+        <br>
+        </div>
+        {% endfor %}
+        
+        {% if alert_flag %}
+        <script>alert("You are not admin. You can not execute this functionaliy!")</script>  
+        {% endif %}
+
+        {% if alert_flag_1 %}
+        <script>alert("You are already logged in!")</script>  
+        {% endif %}
+</div>
+
+</body>
+</html> 
